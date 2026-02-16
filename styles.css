@@ -1,5 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+}
 .hero {
     height: 100vh;
-    background-image: url('hero-background.jpg');
-    align-text: centered;
+    background-image: url('Images/hero-background.jpg');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.hero h1 {
+    font-size: 3.5rem;
+    color: #f0f0f0;
+    margin-bottom: 20px;
+}
+.hero form {
+    display: flex;
+    justify-content: center;
+}
+#locationInput {
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    width: 600px;
+}
+#searchBtn {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #fa5748;
+    color: white;
+    cursor: pointer;
 }
