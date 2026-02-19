@@ -32,7 +32,7 @@ form.addEventListener('submit', async function(event) {
     // Make API call
     const response = await fetch(url);
     const data = await response.json();
-    
+
     // Extract coordinates from the response
     const result = data[0];
     const latitude = parseFloat(result.lat);
@@ -50,8 +50,41 @@ form.addEventListener('submit', async function(event) {
       );
       console.log(`${nationalForests.name}: ${distance} miles away`);
     });
-    
+
+    // After calculating distances, create array with forest + distance
+    const forestsWithDistance = nationalForests.map(nationalForests => {
+      const distance = calculateDistance(
+        latitude, 
+        longitude, 
+        nationalForests.latitude, 
+        nationalForests.longitude
+      );
+    return { ...nationalForests, distance }; // Add distance to nationalForests object
+  });
+
+    // Sort by distance (closest first)
+    forestsWithDistance.sort((a, b) => a.distance - b.distance);
+
+    console.log('Sorted forests:', forestsWithDistance);
+
+    // Display results on the page
+    const createForestCard = (nationalForests) => {
+      return `
+      <div class="forest-card">
+			  <img class="forestImage" src="${nationalForests.imageURL}" alt="Forest Image">
+			  <h2 class="forestName">${nationalForests.name}</h2>
+			  ${nationalForests.dispersedCampingAllowed && '<span class="dispersed-badge">Dispersed Camping Allowed</span>'}
+			  <p class="forestDistance">${nationalForests.distance} miles away</p>
+			  <p class="forestDescription">${nationalForests.description}</p>
+			  <a class="forestLink" href="#${nationalForests.link}" target="_blank">Learn More</a>
+		  </div>`;
+    };
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = forestsWithDistance.map(createForestCard).join('');
+
   } catch (error) {
     console.error('Error:', error);
   }
 });
+
+
