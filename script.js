@@ -76,7 +76,7 @@ form.addEventListener('submit', async function(event) {
 			  ${nationalForests.dispersedCampingAllowed && '<span class="dispersed-badge">Dispersed Camping Allowed</span>'}
 			  <p class="forestDistance">${nationalForests.distance} miles away</p>
 			  <p class="forestDescription">${nationalForests.description}</p>
-			  <a class="forestLink" href="#${nationalForests.link}" target="_blank">Learn More</a>
+			  <a class="forestLink" href="${nationalForests.link}" target="_blank">Learn More</a>
 		  </div>`;
     };
     const resultsContainer = document.getElementById('results');
