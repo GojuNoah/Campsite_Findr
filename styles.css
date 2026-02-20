@@ -47,11 +47,11 @@ body {
 /* Results grid */
 #results {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   gap: 20px;
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -61,7 +61,8 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   overflow: hidden; /* keeps image from breaking border-radius */
-  height: 400px;
+  position: relative; /* for positioning link */
+  height: 450px; /* fixed height for consistent card sizes */
 }
 
 /* Forest image */
@@ -98,6 +99,7 @@ body {
 }
 
 .forestLink {
+    position: absolute;
     display: inline-block;
     margin: 10px 5px;
     padding: 10px 15px;
@@ -105,4 +107,5 @@ body {
     color: white;
     text-decoration: none;
     border-radius: 5px;
+    bottom: 0;
 }
