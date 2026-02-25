@@ -33,4 +33,5 @@ Campsite Findr is a place to find info about dispersed camping at many different
 - Developed campsites
 - Misc campsites
 - Page describing each type of campsite
+- Search Autocomplete
 
