@@ -46,26 +46,28 @@ body {
 
 /* Results grid */
 #results {
-  display: grid;
-  gap: 20px;
-  padding: 20px;
-  margin: 0 auto;
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
 }
 
 /* Individual forest card */
-.forest-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  overflow: hidden; /* keeps image from breaking border-radius */
-  position: relative; /* for positioning link */
+.forestCard {
+    display: flex; /* needed to control flow */
+    flex-direction: column; /* vertically align elements */
+    align-items: start; /* aligns items to the left, default would fill width */
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden; 
 }
 
 /* Forest image */
 .forestImage {
-  width: 100%;
-  height: 30%;
-  object-fit: cover; /* makes image fill space without distortion */
+    width: 100%;
+    height: 30%;
+    object-fit: cover; /* makes image fill space without distortion */
 }
 
 /* Content inside card (below image) */
@@ -75,11 +77,11 @@ body {
 }
 
 .dispersed-badge {
-  background-color: #4CAF50;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin: 5px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 .forestDistance {
@@ -92,34 +94,28 @@ body {
     font-size: 1rem;
     color: #333;
     margin: 5px;
+    display: block;
 }
 
 .forestLink {
-    position: absolute;
     display: inline-block;
-    margin: 10px 5px;
     padding: 10px 15px;
     background-color: #007BFF;
     color: white;
     text-decoration: none;
     border-radius: 5px;
-    bottom: 0;
+    margin: 5px;
+    margin-top: auto; /* pushes to the bottom */
 }
 
 /* Mobile responsiveness */
 @media screen and (max-width: 480px) {
-    .forest-card {
-        height: 325px;
-    }
 }
 
 /* Tablets and Larger Mobiles */
 @media screen and (min-width: 481px) and (max-width: 768px) {
     #results {
         grid-template-columns: repeat(2, 1fr);
-    }
-    .forest-card {
-        height: 425px;
     }
 }
 
@@ -128,17 +124,11 @@ body {
     #results {
         grid-template-columns: repeat(3, 1fr);
     }
-    .forest-card {
-        height: 425px;
-    }
 }
 
 /* Desktops and larger screens */
 @media screen and (min-width: 1280px) {
     #results {
         grid-template-columns: repeat(4, 1fr);
-    }
-    .forest-card {
-        height: 450px;
     }
 }
