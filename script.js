@@ -23,8 +23,6 @@ form.addEventListener('submit', async function(event) {
   const locationInput = document.getElementById('locationInput');
   const userLocation = locationInput.value;
   
-  console.log('Searching for:', userLocation);
-  
   // Build the API URL with user's input
   const url = `https://nominatim.openstreetmap.org/search?q=${userLocation}&format=json&limit=1`;
   
@@ -33,12 +31,12 @@ form.addEventListener('submit', async function(event) {
     const response = await fetch(url);
     const data = await response.json();
 
+    console.log('API Response:', data); // Log the API response for debugging
+
     // Extract coordinates from the response
     const result = data[0];
     const latitude = parseFloat(result.lat);
     const longitude = parseFloat(result.lon);
-    
-    console.log(`User Coordinates: ${latitude}, ${longitude}`);
 
     // Loop through each forest and calculate distance
     nationalForests.forEach(nationalForests => {
@@ -48,7 +46,6 @@ form.addEventListener('submit', async function(event) {
         nationalForests.latitude, 
         nationalForests.longitude
       );
-      console.log(`${nationalForests.name}: ${distance} miles away`);
     });
 
     // After calculating distances, create array with forest + distance
@@ -64,8 +61,6 @@ form.addEventListener('submit', async function(event) {
 
     // Sort by distance (closest first)
     forestsWithDistance.sort((a, b) => a.distance - b.distance);
-
-    console.log('Sorted forests:', forestsWithDistance);
 
     // Display results on the page
     const createForestCard = (nationalForests) => {
