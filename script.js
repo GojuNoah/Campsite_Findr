@@ -24,7 +24,7 @@ form.addEventListener('submit', async function(event) {
   const userLocation = locationInput.value;
   
   // Build the API URL with user's input
-  const url = `https://nominatim.openstreetmap.org/search?q=${userLocation}&format=json&limit=1`;
+  const url = `https://nominatim.openstreetmap.org/search?q=${userLocation}&format=json&limit=1&countrycodes=us`; // Limit to US results
   
   try {
     // Make API call
@@ -74,6 +74,13 @@ form.addEventListener('submit', async function(event) {
 			  <a class="forestLink" href="${nationalForests.link}" target="_blank">View Official USFS Page</a>
 		  </div>`;
     };
+
+    // Get City/State from API response for heading
+    const displayLocation = result.display_name.split(',').slice(0, 2).join(', '); // Get city and state
+    console.log('Display Location:', displayLocation); // Log display location for debugging
+    const resultsHeading = document.getElementById('results-heading');
+    resultsHeading.textContent = `National Forests Near ${displayLocation}`; // Set heading to show user's location
+
     const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = forestsWithDistance.map(createForestCard).join('');
 
