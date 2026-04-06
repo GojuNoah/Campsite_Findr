@@ -1,19 +1,20 @@
+import calculateDistance from './utils/distance.js';
+
 // Get form element
 const form = document.querySelector('form');
 
-// Calculate distance between two coordinates in miles
-function calculateDistance(lat1, lon1, lat2, lon2) {
-  const R = 3959; // Earth's radius in miles
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  const distance = R * c;
-  return Math.round(distance); // Round to nearest mile
+let nationalForests =  [];
+
+async function loadData() {
+  try {
+    const response = await fetch('./data/forests.json');
+    nationalForests = await response.json();
+    console.log(nationalForests);
+  } catch (error) {
+    console.error('Failed to load JSON:', error);
+  }
 }
+loadData();
 
 // Listen for form submission
 form.addEventListener('submit', async function(event) {
@@ -24,7 +25,7 @@ form.addEventListener('submit', async function(event) {
   const userLocation = locationInput.value;
   
   // Build the API URL with user's input
-  const url = `https://nominatim.openstreetmap.org/search?q=${userLocation}&format=json&limit=1&countrycodes=us`; // Limit to US results
+  const url = `https://nominatim.openstreetmap.org/search?q=${userLocation}&format=json&limit=1&countrycodes=us`; // Limited to US results
   
   try {
     // Make API call
@@ -88,5 +89,3 @@ form.addEventListener('submit', async function(event) {
     console.error('Error:', error);
   }
 });
-
-
