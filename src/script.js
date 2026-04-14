@@ -1,4 +1,5 @@
 import calculateDistance from './utils/distance.js';
+import geocode from './utils/geocode.js';
 
 // Get form element
 const form = document.querySelector('form');
@@ -23,21 +24,12 @@ form.addEventListener('submit', async function(event) {
   // Get user's input
   const locationInput = document.getElementById('locationInput');
   const userLocation = locationInput.value;
-  
-  // Build the API URL with user's input
-  const url = `https://nominatim.openstreetmap.org/search?q=${userLocation}&format=json&limit=1&countrycodes=us`; // Limited to US results
-  
+
   try {
-    // Make API call
-    const response = await fetch(url);
-    const data = await response.json();
-
-    console.log('API Response:', data); // Log the API response for debugging
-
-    // Extract coordinates from the response
-    const result = data[0];
-    const latitude = parseFloat(result.lat);
-    const longitude = parseFloat(result.lon);
+    // Get coordinates from geocoding function
+    const { latitude, longitude } = await geocode(userLocation);
+    // Log coordinates for debugging
+    console.log('User Coordinates:', latitude, longitude);
 
     // Loop through each forest and calculate distance
     nationalForests.forEach(nationalForests => {
@@ -76,11 +68,13 @@ form.addEventListener('submit', async function(event) {
 		  </div>`;
     };
 
-    // Get City/State from API response for heading
-    const displayLocation = result.display_name.split(',').slice(0, 2).join(', '); // Get city and state
-    console.log('Display Location:', displayLocation); // Log display location for debugging
+    // Get display location from geocoding function
+    const { displayLocation } = await geocode(userLocation);
+    // Log display location for debugging
+    console.log('Display Location:', displayLocation); 
     const resultsHeading = document.getElementById('results-heading');
-    resultsHeading.textContent = `National Forests Near ${displayLocation}`; // Set heading to show user's location
+    // Set heading to show user's location
+    resultsHeading.textContent = `National Forests Near ${displayLocation}`;
 
     const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = forestsWithDistance.map(createForestCard).join('');
