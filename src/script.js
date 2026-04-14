@@ -1,5 +1,6 @@
 import calculateDistance from './utils/distance.js';
 import geocode from './utils/geocode.js';
+import createForestCard from './components/forestCard.js';
 
 // Get form element
 const form = document.querySelector('form');
@@ -49,24 +50,14 @@ form.addEventListener('submit', async function(event) {
         nationalForests.latitude, 
         nationalForests.longitude
       );
-    return { ...nationalForests, distance }; // Add distance to nationalForests object
+    // Add distance to nationalForests object and return new object
+    return { ...nationalForests, distance };
   });
 
     // Sort by distance (closest first)
     forestsWithDistance.sort((a, b) => a.distance - b.distance);
 
-    // Display results on the page
-    const createForestCard = (nationalForests) => {
-      return `
-      <div class="forestCard">
-			  <img class="forestImage" src="${nationalForests.imageURL}" alt="Forest Image">
-			  <h2 class="forestName">${nationalForests.name}</h2>
-			  ${nationalForests.dispersedCampingAllowed && '<span class="dispersed-badge">Dispersed Camping Allowed</span>'}
-			  <p class="forestDistance">${nationalForests.distance} miles away</p>
-			  <p class="forestDescription">${nationalForests.description}</p>
-			  <a class="forestLink" href="${nationalForests.link}" target="_blank">View Official USFS Page</a>
-		  </div>`;
-    };
+    createForestCard(forestsWithDistance);
 
     // Get display location from geocoding function
     const { displayLocation } = await geocode(userLocation);
