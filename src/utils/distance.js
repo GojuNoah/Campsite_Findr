@@ -1,5 +1,5 @@
 // Calculate distance between two coordinates in miles
-export default function calculateDistance(lat1, lon1, lat2, lon2) {
+export default function calculateDistancesFromForests(lat1, lon1, lat2, lon2) {
   const R = 3959; // Earth's radius in miles
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;

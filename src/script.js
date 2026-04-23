@@ -16,12 +16,16 @@ async function loadData() {
     console.error('Failed to load JSON:', error);
   }
 }
+
 loadData();
 
 // Listen for form submission
 form.addEventListener('submit', async function(event) {
   event.preventDefault(); // Prevents page refresh
+  const resultsContainer = document.getElementById('results');
   
+  resultsContainer.textContent = 'Finding camping locations...'; // Show loading message
+
   // Get user's input
   const locationInput = document.getElementById('locationInput');
   const userLocation = locationInput.value;
@@ -32,27 +36,17 @@ form.addEventListener('submit', async function(event) {
     // Log coordinates for debugging
     console.log('User Coordinates:', latitude, longitude);
 
-    // Loop through each forest and calculate distance
-    nationalForests.forEach(nationalForests => {
-      const distance = calculateDistance(
-        latitude, 
-        longitude, 
-        nationalForests.latitude, 
-        nationalForests.longitude
-      );
-    });
-
-    // After calculating distances, create array with forest + distance
+    // Create array with forest + distance
     const forestsWithDistance = nationalForests.map(nationalForests => {
-      const distance = calculateDistance(
+      const distance = calculateDistancesFromForests(
         latitude, 
         longitude, 
         nationalForests.latitude, 
         nationalForests.longitude
       );
-    // Add distance to nationalForests object and return new object
-    return { ...nationalForests, distance };
-  });
+      // Add distance to nationalForests object and return new object
+      return { ...nationalForests, distance };
+    });
 
     // Sort by distance (closest first)
     forestsWithDistance.sort((a, b) => a.distance - b.distance);
@@ -66,8 +60,6 @@ form.addEventListener('submit', async function(event) {
     const resultsHeading = document.getElementById('results-heading');
     // Set heading to show user's location
     resultsHeading.textContent = `National Forests Near ${displayLocation}`;
-
-    const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = forestsWithDistance.map(createForestCard).join('');
 
   } catch (error) {
