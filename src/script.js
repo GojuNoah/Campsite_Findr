@@ -1,28 +1,27 @@
-import calculateDistance from './utils/distance.js';
+import calculateDistancesFromForests from './utils/distance.js';
 import geocode from './utils/geocode.js';
 import createForestCard from './components/forestCard.js';
 
-// Get form element
 const form = document.querySelector('form');
-
 let nationalForests =  [];
 
+// Load JSON data on page load
 async function loadData() {
   try {
     const response = await fetch('./data/forests.json');
     nationalForests = await response.json();
-    console.log(nationalForests);
   } catch (error) {
     console.error('Failed to load JSON:', error);
   }
 }
-
+// Call the function to load data when the page loads
 loadData();
 
 // Listen for form submission
 form.addEventListener('submit', async function(event) {
   event.preventDefault(); // Prevents page refresh
   const resultsContainer = document.getElementById('results');
+  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to results section
   
   resultsContainer.textContent = 'Finding camping locations...'; // Show loading message
 
@@ -30,11 +29,15 @@ form.addEventListener('submit', async function(event) {
   const locationInput = document.getElementById('locationInput');
   const userLocation = locationInput.value;
 
+  // Form validation: Check if input is empty or gibberish
+  if (!userLocation.trim()) {
+    resultsContainer.textContent = 'Please enter a location.';
+    return;
+  }
+
   try {
     // Get coordinates from geocoding function
     const { latitude, longitude } = await geocode(userLocation);
-    // Log coordinates for debugging
-    console.log('User Coordinates:', latitude, longitude);
 
     // Create array with forest + distance
     const forestsWithDistance = nationalForests.map(nationalForests => {
@@ -54,15 +57,14 @@ form.addEventListener('submit', async function(event) {
     createForestCard(forestsWithDistance);
 
     // Get display location from geocoding function
-    const { displayLocation } = await geocode(userLocation);
-    // Log display location for debugging
-    console.log('Display Location:', displayLocation); 
+    const { displayLocation } = await geocode(userLocation); 
     const resultsHeading = document.getElementById('results-heading');
     // Set heading to show user's location
     resultsHeading.textContent = `National Forests Near ${displayLocation}`;
     resultsContainer.innerHTML = forestsWithDistance.map(createForestCard).join('');
 
   } catch (error) {
+    resultsContainer.textContent = error.message; // Show error message to user
     console.error('Error:', error);
   }
 });

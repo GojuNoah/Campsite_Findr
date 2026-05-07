@@ -6,16 +6,17 @@ export default async function geocode(userLocation) {
     const response = await fetch(url);
     const data = await response.json();
 
-    // Log the API response for debugging
-    console.log('API Response:', data);
-
     // Extract coordinates from the response
     const result = data[0];
+
+    if (!result) {
+        throw new Error('Location not found. Please enter a valid location.');
+    }
+
     const latitude = parseFloat(result.lat);
     const longitude = parseFloat(result.lon);
 
     // Get City/State from API response for heading
     const displayLocation = result.display_name.split(',').slice(0, 2).join(', ');
-    
     return { latitude, longitude, displayLocation };
 }
