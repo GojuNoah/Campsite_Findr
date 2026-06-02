@@ -6,21 +6,56 @@
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
+    background-image: url('src/assets/Images/main-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+.top-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.nav-brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fff;
+}
+.nav-user {
+    font-size: 1.35rem;
+    color: #555;
+}
+.nav-user img {
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
 }
 .hero {
     height: 100vh;
-    background-image: url('src/assets/Images/hero-background.jpg');
-    background-size: cover;
-    background-position: center;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 .hero h1 {
     font-size: 3.5rem;
     color: #f0f0f0;
     margin-bottom: 20px;
+}
+.hero h3 {
+    font-size: 1.25rem;
+    color: #f0f0f0dc;
+    margin-bottom: 30px;
 }
 .hero form {
     display: flex;
@@ -73,14 +108,6 @@ body {
 /* Content inside card (below image) */
 .forestName {
     font-size: 1.5rem;
-    margin: 5px;
-}
-
-.dispersed-badge {
-    background-color: #4CAF50;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
     margin: 5px;
 }
 
